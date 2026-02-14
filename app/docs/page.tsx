@@ -3,7 +3,117 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import DocCard from "../../components/doc-card";
-import Link from "next/link";
+
+const animations = [
+  {
+    id: "typewriter",
+    name: "Typewriter",
+    description: "Types text character by character.",
+    cliUsage: 'flossum typeout "Hello World" -s 80',
+    jsUsage: 'await flossum.typeOut("Hello World", 80);',
+    previewMethod: "typeOut" as const,
+    previewArgs: ["Hello World", 80]
+  },
+  {
+    id: "reverse",
+    name: "Reverse Type",
+    description: "Reveals text starting from the end.",
+    cliUsage: 'flossum reverse "Goodbye" -s 60',
+    jsUsage: 'await flossum.reverseType("Goodbye", 60);',
+    previewMethod: "reverseType" as const,
+    previewArgs: ["Goodbye", 60]
+  },
+  {
+    id: "wave",
+    name: "Wave",
+    description: "Animated wave effect with RGB colors.",
+    cliUsage: 'flossum wave "Surfing" -d 3000',
+    jsUsage: 'await flossum.wave("Surfing", { duration: 3000 });',
+    previewMethod: "wave" as const,
+    previewArgs: ["Surfing", { duration: 3000 }]
+  },
+  {
+    id: "glitch",
+    name: "Glitch",
+    description: "Digital distortion/glitch animation.",
+    cliUsage: 'flossum glitch "System Failure" -d 2000 -s 15',
+    jsUsage: 'await flossum.glitch("System Failure", { duration: 2000, steps: 15 });',
+    previewMethod: "glitch" as const,
+    previewArgs: ["System Failure", { duration: 2000, steps: 15 }]
+  },
+  {
+    id: "scramble",
+    name: "Scramble",
+    description: "Decodes text from random characters.",
+    cliUsage: 'flossum scramble "Decrypted" -d 2000',
+    jsUsage: 'await flossum.scramble("Decrypted", { duration: 2000 });',
+    previewMethod: "scramble" as const,
+    previewArgs: ["Decrypted", { duration: 2000 }]
+  },
+  {
+    id: "rainbow",
+    name: "Rainbow",
+    description: "Cycles text through the color spectrum.",
+    cliUsage: 'flossum rainbow "Colors!" -d 3000',
+    jsUsage: 'await flossum.rainbow("Colors!", { duration: 3000 });',
+    previewMethod: "rainbow" as const,
+    previewArgs: ["Colors!", { duration: 3000 }]
+  },
+  {
+    id: "pulse",
+    name: "Pulse",
+    description: "Color pulsing effect (Blue/Cyan).",
+    cliUsage: 'flossum pulse "Energy" -d 2500',
+    jsUsage: 'await flossum.colorPulse("Energy", 2500);',
+    previewMethod: "pulse" as const,
+    previewArgs: ["Energy", 2500]
+  },
+  {
+    id: "spinner",
+    name: "Spinner",
+    description: "Classic loading spinner.",
+    cliUsage: 'flossum spinner "Loading..." -d 3000',
+    jsUsage: 'await flossum.spinner("Loading...", 3000);',
+    previewMethod: "spinner" as const,
+    previewArgs: ["Loading...", 3000]
+  },
+  {
+    id: "progress",
+    name: "Progress Bar",
+    description: "Animated ASCII progress bar.",
+    cliUsage: 'flossum progress -w 30 -d 2000',
+    jsUsage: 'await flossum.progressBar({ width: 30, duration: 2000 });',
+    previewMethod: "progressBar" as const,
+    previewArgs: [{ width: 30, duration: 2000 }]
+  },
+  {
+    id: "dots",
+    name: "Dots",
+    description: "Loading animation with cycling dots.",
+    cliUsage: 'flossum dots "Thinking" -c 5',
+    jsUsage: 'await flossum.dots("Thinking", { cycles: 5 });',
+    previewMethod: "dots" as const,
+    previewArgs: ["Thinking", { cycles: 5 }]
+  },
+  {
+    id: "flash",
+    name: "Flash",
+    description: "Blinks text on and off.",
+    cliUsage: 'flossum flash "Alert!" -f 6',
+    jsUsage: 'await flossum.flash("Alert!", { flashes: 6 });',
+    previewMethod: "flash" as const,
+    previewArgs: ["Alert!", { flashes: 6 }]
+  },
+  {
+    id: "type-delete",
+    name: "Type-Delete",
+    description: "Types text then deletes it.",
+    cliUsage: 'flossum typeDelete "Typing..." -d 50',
+    jsUsage: 'await flossum.typeDelete("Typing...", { delay: 50 });',
+    previewMethod: "typeDelete" as const,
+    previewArgs: ["Typing...", { delay: 50, repeat: false }]
+  },
+];
 
 export default function Docs() {
   const [activeSection, setActiveSection] = useState("introduction");
@@ -43,117 +153,6 @@ export default function Docs() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const animations = [
-    {
-      id: "typewriter",
-      name: "Typewriter",
-      description: "Types text character by character.",
-      cliUsage: 'flossum typeout "Hello World" -s 80',
-      jsUsage: 'await flossum.typeOut("Hello World", 80);',
-      previewMethod: "typeOut",
-      previewArgs: ["Hello World", 80]
-    },
-    {
-      id: "reverse",
-      name: "Reverse Type",
-      description: "Reveals text starting from the end.",
-      cliUsage: 'flossum reverse "Goodbye" -s 60',
-      jsUsage: 'await flossum.reverseType("Goodbye", 60);',
-      previewMethod: "reverseType",
-      previewArgs: ["Goodbye", 60]
-    },
-    {
-      id: "wave",
-      name: "Wave",
-      description: "Animated wave effect with RGB colors.",
-      cliUsage: 'flossum wave "Surfing" -d 3000',
-      jsUsage: 'await flossum.wave("Surfing", { duration: 3000 });',
-      previewMethod: "wave",
-      previewArgs: ["Surfing", { duration: 3000 }]
-    },
-    {
-      id: "glitch",
-      name: "Glitch",
-      description: "Digital distortion/glitch animation.",
-      cliUsage: 'flossum glitch "System Failure" -d 2000 -s 15',
-      jsUsage: 'await flossum.glitch("System Failure", { duration: 2000, steps: 15 });',
-      previewMethod: "glitch",
-      previewArgs: ["System Failure", { duration: 2000, steps: 15 }]
-    },
-    {
-      id: "scramble",
-      name: "Scramble",
-      description: "Decodes text from random characters.",
-      cliUsage: 'flossum scramble "Decrypted" -d 2000',
-      jsUsage: 'await flossum.scramble("Decrypted", { duration: 2000 });',
-      previewMethod: "scramble",
-      previewArgs: ["Decrypted", { duration: 2000 }]
-    },
-    {
-      id: "rainbow",
-      name: "Rainbow",
-      description: "Cycles text through the color spectrum.",
-      cliUsage: 'flossum rainbow "Colors!" -d 3000',
-      jsUsage: 'await flossum.rainbow("Colors!", { duration: 3000 });',
-      previewMethod: "rainbow",
-      previewArgs: ["Colors!", { duration: 3000 }]
-    },
-    {
-      id: "pulse",
-      name: "Pulse",
-      description: "Color pulsing effect (Blue/Cyan).",
-      cliUsage: 'flossum pulse "Energy" -d 2500',
-      jsUsage: 'await flossum.colorPulse("Energy", 2500);',
-      previewMethod: "pulse",
-      previewArgs: ["Energy", 2500]
-    },
-    {
-      id: "spinner",
-      name: "Spinner",
-      description: "Classic loading spinner.",
-      cliUsage: 'flossum spinner "Loading..." -d 3000',
-      jsUsage: 'await flossum.spinner("Loading...", 3000);',
-      previewMethod: "spinner",
-      previewArgs: ["Loading...", 3000]
-    },
-    {
-      id: "progress",
-      name: "Progress Bar",
-      description: "Animated ASCII progress bar.",
-      cliUsage: 'flossum progress -w 30 -d 2000',
-      jsUsage: 'await flossum.progressBar({ width: 30, duration: 2000 });',
-      previewMethod: "progressBar",
-      previewArgs: [{ width: 30, duration: 2000 }]
-    },
-    {
-      id: "dots",
-      name: "Dots",
-      description: "Loading animation with cycling dots.",
-      cliUsage: 'flossum dots "Thinking" -c 5',
-      jsUsage: 'await flossum.dots("Thinking", { cycles: 5 });',
-      previewMethod: "dots",
-      previewArgs: ["Thinking", { cycles: 5 }]
-    },
-    {
-      id: "flash",
-      name: "Flash",
-      description: "Blinks text on and off.",
-      cliUsage: 'flossum flash "Alert!" -f 6',
-      jsUsage: 'await flossum.flash("Alert!", { flashes: 6 });',
-      previewMethod: "flash",
-      previewArgs: ["Alert!", { flashes: 6 }]
-    },
-    {
-      id: "type-delete",
-      name: "Type-Delete",
-      description: "Types text then deletes it.",
-      cliUsage: 'flossum typeDelete "Typing..." -d 50',
-      jsUsage: 'await flossum.typeDelete("Typing...", { delay: 50 });',
-      previewMethod: "typeDelete",
-      previewArgs: ["Typing...", { delay: 50, repeat: false }]
-    },
-  ];
 
   return (
     <div className="bg-[#12121c] min-h-screen flex flex-col font-ubuntu text-gray-300 overflow-x-hidden">
@@ -292,7 +291,6 @@ export default function Docs() {
             <div className="flex flex-col gap-12">
               {animations.map((anim, index) => (
                 <div key={index} id={anim.id} className="scroll-mt-32">
-                  {/* @ts-expect-error */}
                   <DocCard {...anim} />
                 </div>
               ))}

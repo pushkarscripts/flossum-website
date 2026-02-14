@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import "xterm/css/xterm.css";
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
@@ -25,6 +25,7 @@ const rgb = (r: number, g: number, b: number) => `\x1b[38;2;${r};${g};${b}m`;
 
 class FlossumEngine {
   term: Terminal;
+  processing: boolean = false;
 
   constructor(term: Terminal) {
     this.term = term;
@@ -59,8 +60,8 @@ class FlossumEngine {
       const colored = text
         .split("")
         .map((char, idx) => {
-            // @ts-expect-error
-          const colorCode = colors[colorKeys[(i + idx) % colorKeys.length]];
+          const colorKey = colorKeys[(i + idx) % colorKeys.length] as keyof typeof colors;
+          const colorCode = colors[colorKey];
           return `${colorCode}${char}${colors.reset}`;
         })
         .join("");
@@ -144,96 +145,11 @@ export default function Playground() {
   const commandHistory = useRef<string[]>([]);
   const historyIndex = useRef(-1);
 
-  useEffect(() => {
-    if (!terminalRef.current || xtermRef.current) return;
-
-    // Initialize xterm.js
-    const term = new Terminal({
-      cursorBlink: true,
-      fontFamily: '"JetBrains Mono", "Fira Code", monospace',
-      fontSize: 16,
-      theme: {
-        background: "#1e1e2e",
-        foreground: "#cdd6f4",
-        cursor: "#ffffff",
-        selectionBackground: "rgba(244, 84, 85, 0.3)",
-      },
-      rows: 15,
-      allowProposedApi: true,
-    });
-
-    const fitAddon = new FitAddon();
-    term.loadAddon(fitAddon);
-
-    term.open(terminalRef.current);
-    fitAddon.fit();
-
-    xtermRef.current = term;
-    fitAddonRef.current = fitAddon;
-    engineRef.current = new FlossumEngine(term);
-
-    // Initial greeting
-    term.writeln("\x1b[38;2;244;84;85mFlossum Interactive Shell v1.1.2\x1b[0m");
-    term.writeln("Type \x1b[36mhelp\x1b[0m to see available commands.\n");
-    prompt();
-
-    // Input Handling
-    let currentLine = "";
-
-    term.onKey(({ key, domEvent }) => {
-      // Prevent input if an animation is running
-      if (engineRef.current && (engineRef.current as any).processing) return;
-
-      const ev = domEvent;
-      const printable = !ev.altKey && !ev.ctrlKey && !ev.metaKey;
-
-      if (ev.keyCode === 13) {
-        // Enter
-        term.write("\r\n");
-        handleCommand(currentLine.trim());
-        currentLine = "";
-        historyIndex.current = -1;
-      } else if (ev.keyCode === 8) {
-        // Backspace
-        if (currentLine.length > 0) {
-          currentLine = currentLine.slice(0, -1);
-          term.write("\b \b");
-        }
-      } else if (ev.keyCode === 38) {
-        // Up Arrow (History)
-        if (historyIndex.current < commandHistory.current.length - 1) {
-            historyIndex.current++;
-            const cmd = commandHistory.current[commandHistory.current.length - 1 - historyIndex.current];
-            // Clear current line
-            while(currentLine.length > 0) {
-                term.write("\b \b");
-                currentLine = currentLine.slice(0, -1);
-            }
-            term.write(cmd);
-            currentLine = cmd;
-        }
-      } else if (printable) {
-        currentLine += key;
-        term.write(key);
-      }
-    });
-
-    // Resize listener
-    const handleResize = () => fitAddon.fit();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      term.dispose();
-      xtermRef.current = null;
-    };
+  const prompt = useCallback(() => {
+    xtermRef.current?.write("\r\n\x1b[32muser@flossum\x1b[0m:\x1b[34m~\x1b[0m$ ");
   }, []);
 
-  const prompt = () => {
-    xtermRef.current?.write("\r\n\x1b[32muser@flossum\x1b[0m:\x1b[34m~\x1b[0m$ ");
-  };
-
-  const handleCommand = async (input: string) => {
+  const handleCommand = useCallback(async (input: string) => {
     if (!input) {
       prompt();
       return;
@@ -249,7 +165,7 @@ export default function Playground() {
     }
 
     // Mark processing to lock input
-    (engine as any).processing = true;
+    engine.processing = true;
     setIsProcessing(true);
 
     const fullArgs = input.match(/(?:[^\s"]+|"[^"]*")+/g)?.map(arg => arg.replace(/^"|"$/g, '')) || [];
@@ -306,10 +222,95 @@ export default function Playground() {
       term.writeln(`\r\nError: ${e}`);
     }
 
-    (engine as any).processing = false;
+    engine.processing = false;
     setIsProcessing(false);
     prompt();
-  };
+  }, [prompt]);
+
+  useEffect(() => {
+    if (!terminalRef.current || xtermRef.current) return;
+
+    // Initialize xterm.js
+    const term = new Terminal({
+      cursorBlink: true,
+      fontFamily: '"JetBrains Mono", "Fira Code", monospace',
+      fontSize: 16,
+      theme: {
+        background: "#1e1e2e",
+        foreground: "#cdd6f4",
+        cursor: "#ffffff",
+        selectionBackground: "rgba(244, 84, 85, 0.3)",
+      },
+      rows: 15,
+      allowProposedApi: true,
+    });
+
+    const fitAddon = new FitAddon();
+    term.loadAddon(fitAddon);
+
+    term.open(terminalRef.current);
+    fitAddon.fit();
+
+    xtermRef.current = term;
+    fitAddonRef.current = fitAddon;
+    engineRef.current = new FlossumEngine(term);
+
+    // Initial greeting
+    term.writeln("\x1b[38;2;244;84;85mFlossum Interactive Shell v1.1.2\x1b[0m");
+    term.writeln("Type \x1b[36mhelp\x1b[0m to see available commands.\n");
+    prompt();
+
+    // Input Handling
+    let currentLine = "";
+
+    term.onKey(({ key, domEvent }) => {
+      // Prevent input if an animation is running
+      if (engineRef.current && engineRef.current.processing) return;
+
+      const ev = domEvent;
+      const printable = !ev.altKey && !ev.ctrlKey && !ev.metaKey;
+
+      if (ev.keyCode === 13) {
+        // Enter
+        term.write("\r\n");
+        void handleCommand(currentLine.trim());
+        currentLine = "";
+        historyIndex.current = -1;
+      } else if (ev.keyCode === 8) {
+        // Backspace
+        if (currentLine.length > 0) {
+          currentLine = currentLine.slice(0, -1);
+          term.write("\b \b");
+        }
+      } else if (ev.keyCode === 38) {
+        // Up Arrow (History)
+        if (historyIndex.current < commandHistory.current.length - 1) {
+            historyIndex.current++;
+            const cmd = commandHistory.current[commandHistory.current.length - 1 - historyIndex.current];
+            // Clear current line
+            while(currentLine.length > 0) {
+                term.write("\b \b");
+                currentLine = currentLine.slice(0, -1);
+            }
+            term.write(cmd);
+            currentLine = cmd;
+        }
+      } else if (printable) {
+        currentLine += key;
+        term.write(key);
+      }
+    });
+
+    // Resize listener
+    const handleResize = () => fitAddon.fit();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      term.dispose();
+      xtermRef.current = null;
+    };
+  }, [prompt, handleCommand]);
 
   return (
     <div className="mt-16 pb-0" id="playground">
