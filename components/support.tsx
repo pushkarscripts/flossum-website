@@ -16,7 +16,7 @@ export default function Support() {
 
   useEffect(() => {
     // Fetch star count
-    fetch("https://api.github.com/repos/pushkarsinghh/flossum")
+    fetch("https://api.github.com/repos/pushkarscripts/flossum")
       .then((res) => res.json())
       .then((data) => setStarCount(data.stargazers_count || 0))
       .catch(() => setStarCount(0));
@@ -26,13 +26,13 @@ export default function Support() {
       try {
         const [flossumRes, devtoolsRes, websiteRes] = await Promise.all([
           fetch(
-            "https://api.github.com/repos/pushkarsinghh/flossum/contributors"
+            "https://api.github.com/repos/pushkarscripts/flossum/contributors"
           ),
           fetch(
-            "https://api.github.com/repos/pushkarsinghh/flossum-devtools/contributors"
+            "https://api.github.com/repos/pushkarscripts/flossum-devtools/contributors"
           ),
           fetch(
-            "https://api.github.com/repos/pushkarsinghh/flossum-website/contributors"
+            "https://api.github.com/repos/pushkarscripts/flossum-website/contributors"
           ),
         ]);
         const flossumData = await flossumRes.json();
@@ -82,7 +82,7 @@ export default function Support() {
         <div
           onClick={() =>
             window.open(
-              "https://github.com/pushkarsinghh/flossum",
+              "https://github.com/pushkarscripts/flossum",
               "_blank",
               "noopener,noreferrer"
             )
@@ -107,7 +107,7 @@ export default function Support() {
 
         {/* Buy Me a Coffee */}
         <a
-          href="https://buymeacoffee.com/pushkarsinghh"
+          href="https://buymeacoffee.com/pushkarscripts"
           target="_blank"
           rel="noopener noreferrer"
           className="group relative hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer animate-in fade-in slide-in-from-left-8 delay-200"
@@ -128,7 +128,7 @@ export default function Support() {
         <div
           onClick={() =>
             window.open(
-              "https://github.com/sponsors/pushkarsinghh",
+              "https://github.com/sponsors/pushkarscripts",
               "_blank",
               "noopener,noreferrer"
             )

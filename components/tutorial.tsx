@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Playground from "./playground";
+import Link from "next/link";
 
 export default function Tutorial() {
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
@@ -12,20 +14,20 @@ export default function Tutorial() {
   };
 
   const effects = [
-    ["⌨️", "Typewriter", "typeOut", "Simulates typing text"],
-    ["⏪", "Reverse Typewriter", "reverseType", "Deletes text like rewinding"],
-    ["🌊", "Wavy Text", "wave", "Animated wave motion"],
-    ["🌈", "Color Pulse", "colorPulse", "Pulsing color animation"],
-    ["🔁", "Spinner", "spinner", "Loading spinner effect"],
-    ["📊", "Progress Bar", "progressBar", "Animated progress bar"],
-    ["🤯", "Glitch", "glitch", "Glitchy text distortion"],
-    ["🧩", "Scramble Decoder", "scramble", "Scrambled-to-clear text"],
-    ["🌈", "Rainbow Text", "rainbow", "Animated rainbow colors"],
-    ["🎞", "Frame Player", "playFrames", "ASCII animation frames"],
-    ["🅰️", "ASCII Art", "asciiArt", "Text as ASCII art"],
-    ["⚡", "Flash", "flash", "Flashing/blinking text"],
-    ["✂️", "Type-Delete", "typeDelete", "Type and delete animation"],
-    ["⏳", "Loading Dots", "dots", "Animated loading dots"],
+    ["⌨️", "Typewriter", "typeOut", "Simulates typing text", "typewriter"],
+    ["⏪", "Reverse Typewriter", "reverseType", "Deletes text like rewinding", "reverse"],
+    ["🌊", "Wavy Text", "wave", "Animated wave motion", "wave"],
+    ["🌈", "Color Pulse", "colorPulse", "Pulsing color animation", "pulse"],
+    ["🔁", "Spinner", "spinner", "Loading spinner effect", "spinner"],
+    ["📊", "Progress Bar", "progressBar", "Animated progress bar", "progress"],
+    ["🤯", "Glitch", "glitch", "Glitchy text distortion", "glitch"],
+    ["🧩", "Scramble Decoder", "scramble", "Scrambled-to-clear text", "scramble"],
+    ["🌈", "Rainbow Text", "rainbow", "Animated rainbow colors", "rainbow"],
+    ["🎞", "Frame Player", "playFrames", "ASCII animation frames", "animations"],
+    ["🅰️", "ASCII Art", "asciiArt", "Text as ASCII art", "animations"],
+    ["⚡", "Flash", "flash", "Flashing/blinking text", "flash"],
+    ["✂️", "Type-Delete", "typeDelete", "Type and delete animation", "type-delete"],
+    ["⏳", "Loading Dots", "dots", "Animated loading dots", "dots"],
   ];
 
   const jsCode = `import { flossum } from 'flossum';\n\nawait flossum.effectName('Hello World!');`;
@@ -224,7 +226,11 @@ export default function Tutorial() {
         </div>
       </div>
 
-      {/* Demo Video Section */}
+      <div className="mt-8">
+          <Playground />
+      </div>
+
+      {/* Demo Video Section - Commented out for now
       <div
         className="mt-16 animate-fade-in"
         style={{ animationDelay: "300ms" }}
@@ -245,6 +251,7 @@ export default function Tutorial() {
           />
         </div>
       </div>
+      */}
 
       {/* Available Effects Section */}
       <section className="flex flex-col mt-16">
@@ -254,10 +261,11 @@ export default function Tutorial() {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {effects.map(([emoji, title, code, desc], index) => (
-            <div
-              key={code}
-              className="group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-5 rounded-2xl border border-gray-800 hover:border-[#f45455]/50 transition-all duration-300 hover:shadow-xl hover:shadow-[#f45455]/10 animate-fade-in-up hover:-translate-y-1"
+          {effects.map(([emoji, title, code, desc, docId], index) => (
+            <Link 
+              key={code} 
+              href={`/docs#${docId}`}
+              className="group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-5 rounded-2xl border border-gray-800 hover:border-[#f45455]/50 transition-all duration-300 hover:shadow-xl hover:shadow-[#f45455]/10 animate-fade-in-up hover:-translate-y-1 block"
               style={{ animationDelay: `${index * 30}ms` }}
             >
               {/* Glow effect */}
@@ -281,7 +289,7 @@ export default function Tutorial() {
                   {desc}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

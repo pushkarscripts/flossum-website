@@ -52,7 +52,7 @@ export default function Contribute() {
           <p className="text-base sm:text-xl mb-6 text-gray-300 leading-relaxed font-ubuntu">
             Check out the available issues on our{" "}
             <a
-              href="https://github.com/pushkarsinghh/flossum/issues"
+              href="https://github.com/pushkarscripts/flossum/issues"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#549ff4] hover:text-[#6bb3ff] font-semibold relative inline-flex items-center gap-1 group/link transition-colors duration-200"
@@ -107,7 +107,7 @@ export default function Contribute() {
           {/* CTA Button */}
           <div className="mt-8">
             <a
-              href="https://github.com/pushkarsinghh/flossum/issues"
+              href="https://github.com/pushkarscripts/flossum/issues"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#f45455] to-[#e63946] text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:shadow-[#f45455]/30 transform hover:scale-105 active:scale-95 transition-all duration-300 group/btn"

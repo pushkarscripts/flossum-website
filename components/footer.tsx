@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 export default function Footer() {
     const scrollToSection = (id: string) => {
@@ -36,23 +37,29 @@ export default function Footer() {
                                     '"Bahnschrift Condensed", "Bahnschrift", "Agency FB", Arial, sans-serif',
                             }}
                         >
-                            <li 
-                                className="cursor-pointer hover:translate-x-2 hover:text-white/90 transition-all duration-300 relative group"
-                                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                            >
-                                <span className="relative">
-                                    Home
-                                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300" />
-                                </span>
+                            <li className="relative group">
+                                <Link href="/" className="hover:text-white/90 transition-all duration-300 block hover:translate-x-2">
+                                    <span className="relative">
+                                        Home
+                                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300" />
+                                    </span>
+                                </Link>
                             </li>
-                            <li 
-                                className="cursor-pointer hover:translate-x-2 hover:text-white/90 transition-all duration-300 relative group"
-                                onClick={() => scrollToSection("about")}
-                            >
-                                <span className="relative">
-                                    About
-                                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300" />
-                                </span>
+                            <li className="relative group">
+                                <Link href="/docs" className="hover:text-white/90 transition-all duration-300 block hover:translate-x-2">
+                                    <span className="relative">
+                                        Docs
+                                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300" />
+                                    </span>
+                                </Link>
+                            </li>
+                            <li className="relative group">
+                                <Link href="/playground" className="hover:text-white/90 transition-all duration-300 block hover:translate-x-2">
+                                    <span className="relative">
+                                        Playground
+                                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300" />
+                                    </span>
+                                </Link>
                             </li>
                             <li 
                                 className="cursor-pointer hover:translate-x-2 hover:text-white/90 transition-all duration-300 relative group"
@@ -60,15 +67,6 @@ export default function Footer() {
                             >
                                 <span className="relative">
                                     Feedback
-                                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300" />
-                                </span>
-                            </li>
-                            <li 
-                                className="cursor-pointer hover:translate-x-2 hover:text-white/90 transition-all duration-300 relative group"
-                                onClick={() => scrollToSection("help")}
-                            >
-                                <span className="relative">
-                                    Help Center
                                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300" />
                                 </span>
                             </li>
@@ -123,7 +121,7 @@ export default function Footer() {
                     >
                         <li 
                             className="cursor-pointer hover:translate-x-2 hover:text-white/90 transition-all duration-300 relative group"
-                            onClick={() => window.open("https://github.com/pushkarsinghh/", "_blank", "noopener,noreferrer")}
+                            onClick={() => window.open("https://github.com/pushkarscripts/", "_blank", "noopener,noreferrer")}
                         >
                             <span className="relative">
                                 GitHub
@@ -141,7 +139,7 @@ export default function Footer() {
                         </li>
                         <li 
                             className="cursor-pointer hover:translate-x-2 hover:text-white/90 transition-all duration-300 relative group"
-                            onClick={() => window.open("https://linkedin.com/in/pushkarsinghh", "_blank", "noopener,noreferrer")}
+                            onClick={() => window.open("https://linkedin.com/in/pushkarscripts", "_blank", "noopener,noreferrer")}
                         >
                             <span className="relative">
                                 LinkedIn
@@ -175,15 +173,17 @@ export default function Footer() {
                         </p>
                         <div className="relative">
                             <div className="absolute inset-0 bg-gradient-to-r from-[#f45455] via-[#ff6b6b] to-[#f45455] rounded-lg blur opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
-                            <p
-                                className="relative bg-[#f45455] rounded-lg text-white flex justify-center items-center font-semibold cursor-pointer p-2 m-2 hover:scale-95 active:scale-90 transition-all duration-200 text-5xl shadow-lg"
-                                style={{
-                                    fontFamily:
-                                        '"Bahnschrift Condensed", "Bahnschrift", "Agency FB", Arial, sans-serif',
-                                }}
-                            >
-                                v1.0.9
-                            </p>
+                            <Link href="/patch-notes">
+                                <p
+                                    className="relative bg-[#f45455] rounded-lg text-white flex justify-center items-center font-semibold cursor-pointer p-2 m-2 hover:scale-95 active:scale-90 transition-all duration-200 text-5xl shadow-lg"
+                                    style={{
+                                        fontFamily:
+                                            '"Bahnschrift Condensed", "Bahnschrift", "Agency FB", Arial, sans-serif',
+                                    }}
+                                >
+                                    v1.1.2
+                                </p>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -209,7 +209,7 @@ export default function Footer() {
                 >
                     MIT Licensed ·{" "}
                     <a
-                        href="https://github.com/pushkarsinghh/"
+                        href="https://github.com/pushkarscripts/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="underline hover:text-white/80 transition-colors duration-300 relative group"
@@ -233,7 +233,7 @@ export default function Footer() {
                 <p className="text-white/90">
                     © {new Date().getFullYear()} Flossum. MIT Licensed. Open source on{" "}
                     <a
-                        href="https://github.com/pushkarsinghh/flossum"
+                        href="https://github.com/pushkarscripts/flossum"
                         className="hover:text-white transition-colors duration-300 relative group"
                         target="_blank"
                         rel="noopener noreferrer"

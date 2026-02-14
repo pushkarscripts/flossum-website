@@ -26,7 +26,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`w-full flex justify-between items-center px-6 py-4 text-[#FF6B6B] font-bold text-3xl sticky top-0 z-50 mb-8 transition-all duration-500 ${
+      className={`w-full flex justify-between items-center px-6 py-3 text-[#FF6B6B] font-bold text-xl sticky top-0 z-50 mb-4 transition-all duration-500 ${
         scrolled
           ? "bg-white/80 dark:bg-[#12121c]/80 backdrop-blur-xl shadow-lg shadow-black/5 dark:shadow-black/20"
           : "bg-transparent"
@@ -43,51 +43,58 @@ export default function Navbar() {
       />
 
       {/* Logo */}
-      <Link href="#" className="flex items-center gap-2 group relative z-10">
-        <div className="absolute inset-0 bg-[#FF6B6B]/10 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <Link href="/" className="flex items-center gap-2 group relative z-10">
         <Image
           src="/Flossum-logo-wide.png"
           alt="Flossum Logo"
           width={110}
           height={32}
-          className="h-17 w-50 transition-transform duration-300 group-hover:scale-105 relative"
+          className="h-17 w-50 relative"
           unoptimized
         />
       </Link>
 
       {/* Desktop Menu */}
-      <div className="hidden md:flex gap-8 items-center">
+      <div className="hidden md:flex gap-6 items-center uppercase tracking-wider">
         <Link
-          href="#"
+          href="/"
           className="relative group transition-colors duration-300 hover:text-[#FF8B8B]"
         >
           <span className="relative z-10">HOME</span>
           <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF6B6B] group-hover:w-full transition-all duration-300" />
         </Link>
 
-        <li
-          className="list-none relative group cursor-pointer transition-colors duration-300 hover:text-[#FF8B8B]"
-          onClick={() => scrollToSection("tutorial")}
+        <Link
+          href="/docs"
+          className="relative group transition-colors duration-300 hover:text-[#FF8B8B]"
         >
-          <span className="relative z-10">LEARN</span>
+          <span className="relative z-10">DOCUMENTATION</span>
           <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF6B6B] group-hover:w-full transition-all duration-300" />
-        </li>
+        </Link>
 
-        <li
-          className="list-none relative group cursor-pointer transition-colors duration-300 hover:text-[#FF8B8B]"
-          onClick={() => scrollToSection("contribute")}
+        <Link
+          href="/playground"
+          className="relative group transition-colors duration-300 hover:text-[#FF8B8B]"
+        >
+          <span className="relative z-10">PLAYGROUND</span>
+          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF6B6B] group-hover:w-full transition-all duration-300" />
+        </Link>
+
+        <Link
+          href="/#contribute"
+          className="relative group transition-colors duration-300 hover:text-[#FF8B8B]"
         >
           <span className="relative z-10">CONTRIBUTE</span>
           <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF6B6B] group-hover:w-full transition-all duration-300" />
-        </li>
+        </Link>
 
-        <li
-          className="list-none relative group cursor-pointer transition-colors duration-300 hover:text-[#FF8B8B]"
-          onClick={() => scrollToSection("support")}
+        <Link
+          href="/#support"
+          className="relative group transition-colors duration-300 hover:text-[#FF8B8B]"
         >
           <span className="relative z-10">SUPPORT</span>
           <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF6B6B] group-hover:w-full transition-all duration-300" />
-        </li>
+        </Link>
       </div>
 
       {/* Mobile Menu Button */}
@@ -132,40 +139,44 @@ export default function Navbar() {
 
         <div className="flex flex-col p-6 gap-1">
           <Link
-            href="#"
+            href="/"
             className="px-4 py-3 rounded-xl hover:bg-[#FF6B6B]/10 transition-all duration-200 hover:translate-x-1"
             onClick={() => setMenuOpen(false)}
           >
             HOME
           </Link>
 
-          <li
-            className="list-none px-4 py-3 rounded-xl hover:bg-[#FF6B6B]/10 cursor-pointer transition-all duration-200 hover:translate-x-1"
-            onClick={() => scrollToSection("tutorial")}
+          <Link
+            href="/docs"
+            className="px-4 py-3 rounded-xl hover:bg-[#FF6B6B]/10 transition-all duration-200 hover:translate-x-1"
+            onClick={() => setMenuOpen(false)}
           >
-            LEARN
-          </li>
+            DOCUMENTATION
+          </Link>
 
-          <li
-            className="list-none px-4 py-3 rounded-xl hover:bg-[#FF6B6B]/10 cursor-pointer transition-all duration-200 hover:translate-x-1"
-            onClick={() => scrollToSection("about")}
+          <Link
+            href="/playground"
+            className="px-4 py-3 rounded-xl hover:bg-[#FF6B6B]/10 transition-all duration-200 hover:translate-x-1"
+            onClick={() => setMenuOpen(false)}
           >
-            ABOUT
-          </li>
+            PLAYGROUND
+          </Link>
 
-          <li
-            className="list-none px-4 py-3 rounded-xl hover:bg-[#FF6B6B]/10 cursor-pointer transition-all duration-200 hover:translate-x-1"
-            onClick={() => scrollToSection("contribute")}
+          <Link
+            href="/#contribute"
+            className="px-4 py-3 rounded-xl hover:bg-[#FF6B6B]/10 transition-all duration-200 hover:translate-x-1"
+            onClick={() => setMenuOpen(false)}
           >
             CONTRIBUTE
-          </li>
+          </Link>
 
-          <li
-            className="list-none px-4 py-3 rounded-xl hover:bg-[#FF6B6B]/10 cursor-pointer transition-all duration-200 hover:translate-x-1"
-            onClick={() => scrollToSection("support")}
+          <Link
+            href="/#support"
+            className="px-4 py-3 rounded-xl hover:bg-[#FF6B6B]/10 transition-all duration-200 hover:translate-x-1"
+            onClick={() => setMenuOpen(false)}
           >
             SUPPORT
-          </li>
+          </Link>
         </div>
       </div>
 

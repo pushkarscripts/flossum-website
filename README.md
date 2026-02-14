@@ -18,7 +18,7 @@ Built with:
 
 ## 🤝 Contribute
 
-This website is open source. Found a bug or want to improve the UX? Head to the [repository](https://github.com/pushkarsinghh/flossum-website) and open a pull request.
+This website is open source. Found a bug or want to improve the UX? Head to the [repository](https://github.com/pushkarscripts/flossum-website) and open a pull request.
 
 ---
 
