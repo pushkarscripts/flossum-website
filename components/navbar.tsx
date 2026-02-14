@@ -16,14 +16,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-    setMenuOpen(false);
-  };
-
   return (
     <nav
       className={`w-full flex justify-between items-center px-6 py-3 text-[#FF6B6B] font-bold text-xl sticky top-0 z-50 mb-4 transition-all duration-500 ${

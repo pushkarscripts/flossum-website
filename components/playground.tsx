@@ -59,7 +59,7 @@ class FlossumEngine {
       const colored = text
         .split("")
         .map((char, idx) => {
-            // @ts-ignore
+            // @ts-expect-error
           const colorCode = colors[colorKeys[(i + idx) % colorKeys.length]];
           return `${colorCode}${char}${colors.reset}`;
         })

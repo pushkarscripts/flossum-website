@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Playground from "./playground";
 import Link from "next/link";
+import dynamic from 'next/dynamic';
+
+const Playground = dynamic(() => import("./playground"), { ssr: false });
 
 export default function Tutorial() {
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
