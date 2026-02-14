@@ -8,12 +8,13 @@ export default function PatchNotes() {
     {
       version: "v1.1.2",
       date: "February 14, 2026",
-      title: "Synchronization & Testing",
+      title: "Core Library & DevTools Update",
       changes: [
-        "Fixed circular dependency in core library.",
-        "Added comprehensive Vitest test suite.",
-        "Updated API documentation for LLMs.",
-        "Synchronized versioning across monorepo.",
+        "Added full unit test coverage for all library animations using Vitest.",
+        "Updated DevTools snippets to include missing AsciiArt and Dots effects.",
+        "Corrected library type definitions (index.d.ts) and fixed circular dependencies.",
+        "Synchronized versioning and migrated links to the 'pushkarscripts' organization.", 
+        "Optimized animation loop efficiency in core utility functions.",                
       ],
       type: "patch",
     },
